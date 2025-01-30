@@ -1,7 +1,8 @@
 package com.sadman.financial.responses;
 
 
-import com.sami.plant_ecom.entity.User;
+
+import com.sadman.financial.entity.User;
 import lombok.Data;
 
 @Data
@@ -27,8 +28,6 @@ public class UserResponse {
         response.setUserId(user.getId());
         response.setName(user.getName());
         response.setEmail(user.getEmail());
-        response.setPhoneNumber(user.getPhoneNumber());
-        response.setProfileImage(user.getProfileImage());
         return response;
     }
 

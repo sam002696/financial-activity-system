@@ -1,7 +1,7 @@
 package com.sadman.financial.security;
 
 
-import com.sami.plant_ecom.service.CustomUserDetailsService;
+import com.sadman.financial.service.CustomUserDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

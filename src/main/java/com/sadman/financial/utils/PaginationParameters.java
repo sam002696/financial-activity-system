@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 import java.util.Map;
 
-import static com.sami.plant_ecom.utils.ResponseBuilder.error;
+import static com.sadman.financial.utils.ResponseBuilder.error;
 import static org.springframework.http.ResponseEntity.badRequest;
 
 public class PaginationParameters {

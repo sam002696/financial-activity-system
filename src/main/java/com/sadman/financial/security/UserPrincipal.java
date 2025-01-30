@@ -1,7 +1,7 @@
 package com.sadman.financial.security;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sami.plant_ecom.entity.User;
+import com.sadman.financial.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,17 +15,16 @@ public class UserPrincipal implements UserDetails {
 
     private final Long id;
     private final String userName;
-    private final String mobile;
     @JsonIgnore
     private final String email;
     @JsonIgnore
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String userName, String mobile, String email, String password, Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String userName, String password, String email,
+                         Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.userName = userName;
-        this.mobile = mobile;
         this.email = email;
         this.password = password;
         this.authorities = authorities;
@@ -37,7 +36,6 @@ public class UserPrincipal implements UserDetails {
         return new UserPrincipal(
                 user.getId(),
                 user.getName(),
-                user.getPhoneNumber(),
                 user.getEmail(),
                 user.getPassword(),
                 authorities
@@ -50,10 +48,6 @@ public class UserPrincipal implements UserDetails {
 
     public String getName() {
         return userName;
-    }
-
-    public String getMobile() {
-        return mobile;
     }
 
     public String getEmail() {

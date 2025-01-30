@@ -1,9 +1,10 @@
 package com.sadman.financial.service;
 
-import com.sami.plant_ecom.entity.User;
-import com.sami.plant_ecom.exceptions.CustomMessageException;
-import com.sami.plant_ecom.repository.UserRepository;
-import com.sami.plant_ecom.security.UserPrincipal;
+
+import com.sadman.financial.entity.User;
+import com.sadman.financial.exceptions.CustomMessageException;
+import com.sadman.financial.repository.UserRepository;
+import com.sadman.financial.security.UserPrincipal;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,8 +16,6 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
 
-//    @Autowired
-//    private UserRepository userRepository;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

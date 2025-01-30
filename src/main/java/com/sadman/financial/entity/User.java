@@ -1,5 +1,6 @@
 package com.sadman.financial.entity;
 
+import com.sadman.financial.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -16,6 +17,11 @@ public class User extends BaseEntity {
     private String name;
     private String email;
     private String password;
+
+    private Double balance;
+
+    @Enumerated(EnumType.STRING)
+    private RoleName role;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY)
     private List<Income> incomes;

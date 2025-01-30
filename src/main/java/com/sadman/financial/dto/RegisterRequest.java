@@ -13,10 +13,7 @@ public class RegisterRequest {
     @NotBlank(message = "Name is required")
     private String name;
 
-//    private String role;
-//
-//    @NotBlank(message = "PhoneNo is required")
-//    private String phoneNumber;
+    private String role;
 
     @NotBlank(message = "Password is required")
     private String password;

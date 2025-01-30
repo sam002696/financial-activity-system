@@ -1,6 +1,6 @@
 package com.sadman.financial.utils;
 
-import com.sami.plant_ecom.constants.ResponseStatus;
+import com.sadman.financial.constants.ResponseStatus;
 import lombok.Data;
 import org.json.simple.JSONObject;
 

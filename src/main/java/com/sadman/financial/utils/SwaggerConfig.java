@@ -32,8 +32,9 @@ public class SwaggerConfig {
 
     private Info apiInfo() {
         return new Info()
-                .title("Plant API Documentation")
-                .description("A backend service for plant ecom using Spring Boot 3")
+                .title("Financial Activity Management System API Documentation")
+                .description("A system to manage financial activities including income, expenses, and loans with " +
+                        "contract enforcement between users and the system.")
                 .version("v0.0.1")
                 .contact(apiContact())
                 .license(apiLicence());

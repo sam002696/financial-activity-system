@@ -1,7 +1,7 @@
 package com.sadman.financial.exceptions;
 
 
-import com.sami.plant_ecom.utils.ResponseBuilder;
+import com.sadman.financial.utils.ResponseBuilder;
 import lombok.extern.slf4j.Slf4j;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
