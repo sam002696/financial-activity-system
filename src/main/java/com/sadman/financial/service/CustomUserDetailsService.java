@@ -1,6 +1,5 @@
 package com.sadman.financial.service;
 
-
 import com.sadman.financial.entity.User;
 import com.sadman.financial.exceptions.CustomMessageException;
 import com.sadman.financial.repository.UserRepository;
@@ -16,6 +15,8 @@ import org.springframework.stereotype.Service;
 public class CustomUserDetailsService implements UserDetailsService {
 
 
+//    @Autowired
+//    private UserRepository userRepository;
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;

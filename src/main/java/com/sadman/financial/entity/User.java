@@ -4,6 +4,7 @@ import com.sadman.financial.enums.RoleName;
 import jakarta.persistence.*;
 import lombok.Data;
 
+
 import java.util.List;
 
 @Data

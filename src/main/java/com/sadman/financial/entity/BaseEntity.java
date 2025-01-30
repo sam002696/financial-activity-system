@@ -1,7 +1,7 @@
 package com.sadman.financial.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.sami.plant_ecom.enums.RecordStatus;
+import com.sadman.financial.enums.RecordStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

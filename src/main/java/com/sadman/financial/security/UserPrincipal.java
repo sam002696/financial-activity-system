@@ -10,7 +10,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
 
-
 public class UserPrincipal implements UserDetails {
 
     private final Long id;
@@ -21,8 +20,7 @@ public class UserPrincipal implements UserDetails {
     private final String password;
     private final Collection<? extends GrantedAuthority> authorities;
 
-    public UserPrincipal(Long id, String userName, String password, String email,
-                         Collection<? extends GrantedAuthority> authorities) {
+    public UserPrincipal(Long id, String userName, String email, String password, Collection<? extends GrantedAuthority> authorities) {
         this.id = id;
         this.userName = userName;
         this.email = email;

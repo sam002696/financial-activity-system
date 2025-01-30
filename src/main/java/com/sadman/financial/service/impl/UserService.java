@@ -43,21 +43,28 @@ public class UserService implements IUserService {
     public User register(RegisterRequest reqUser) {
         User user = new User();
         if (reqUser.getRole() == null || reqUser.getRole().isEmpty()) {
-            reqUser.setRole("USER");
+            reqUser.setRole("USER");  // Default to "USER" if role is null or empty
         }
-        if (userRepository.existsByEmail(reqUser.getEmail())) {
-                throw new CustomMessageException(reqUser.getEmail() + "Already Exists");
-            }
-        reqUser.setPassword(passwordEncoder.encode(reqUser.getPassword()));
 
+        // Validate role to ensure it's a valid enum
+        try {
+            user.setRole(RoleName.valueOf(reqUser.getRole().toUpperCase()));
+        } catch (IllegalArgumentException e) {
+            throw new CustomMessageException("Invalid role: " + reqUser.getRole());
+        }
+
+        if (userRepository.existsByEmail(reqUser.getEmail())) {
+            throw new CustomMessageException(reqUser.getEmail() + " already exists");
+        }
+
+        reqUser.setPassword(passwordEncoder.encode(reqUser.getPassword()));
         user.setEmail(reqUser.getEmail());
         user.setName(reqUser.getName());
-        user.setRole(RoleName.valueOf(reqUser.getRole()));
         user.setPassword(reqUser.getPassword());
 
         return userRepository.save(user);
-
     }
+
 
     @Override
     public LoginResponse login(LoginRequest loginRequest) {
