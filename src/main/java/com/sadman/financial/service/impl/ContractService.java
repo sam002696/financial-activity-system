@@ -1,6 +1,7 @@
 package com.sadman.financial.service.impl;
 
 import com.sadman.financial.entity.Contract;
+import com.sadman.financial.entity.Expense;
 import com.sadman.financial.entity.Income;
 import com.sadman.financial.entity.User;
 import com.sadman.financial.enums.ContractStatus;
@@ -28,4 +29,18 @@ public class ContractService implements IContractService {
         contract.setUser(user);                        // Associate the user with the contract
         contractRepository.save(contract);             // Save the contract to the repository
     }
+
+
+    public void createContractForExpense(Expense expense, User user) {
+        // Create the contract for the expense
+        Contract contract = new Contract();
+        contract.setExpense(expense);
+        contract.setUser(user);
+        contract.setContractType(ContractType.EXPENSE);
+        contract.setStatus(ContractStatus.ACTIVE);
+        contract.setTerms("Expense logged");
+        contract.setStartDate(LocalDate.now());
+        contractRepository.save(contract);             // Save the contract to the repository
+    }
+
 }
