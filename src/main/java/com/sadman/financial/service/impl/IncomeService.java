@@ -6,11 +6,15 @@ import com.sadman.financial.entity.User;
 import com.sadman.financial.exceptions.CustomMessageException;
 import com.sadman.financial.repository.IncomeRepository;
 import com.sadman.financial.repository.UserRepository;
+import com.sadman.financial.responses.IncomeResponse;
 import com.sadman.financial.security.UserPrincipal;
 import com.sadman.financial.service.interfaces.IIncomeService;
+import com.sadman.financial.utils.ServiceHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+
+import java.util.Map;
 
 @Service
 public class IncomeService implements IIncomeService {
@@ -60,4 +64,24 @@ public class IncomeService implements IIncomeService {
         // Return the created income
         return income;
     }
+
+
+    @Override
+    public IncomeResponse getIncomeById(Long incomeId) {
+        Income income = incomeRepository.findById(incomeId)
+                .orElseThrow(() -> new CustomMessageException("Income not found " + incomeId));
+
+        return IncomeResponse.select(income);
+    }
+
+
+    @Override
+    public Map<String, Object> search(Integer page, Integer size, String sortBy, String search) {
+        ServiceHelper<Income> serviceHelper = new ServiceHelper<>(Income.class);
+        return serviceHelper.getList(
+                incomeRepository.search(search, serviceHelper.getPageable(sortBy, page, size)),
+                page, size);
+    }
+
+
 }
