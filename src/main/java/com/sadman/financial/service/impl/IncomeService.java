@@ -113,4 +113,24 @@ public class IncomeService implements IIncomeService {
         return IncomeResponse.select(existingIncome);
     }
 
+
+    @Override
+    public void deleteIncomeById(Long incomeId) {
+        // Retrieve the existing income by its ID
+        Income existingIncome = incomeRepository.findById(incomeId)
+                .orElseThrow(() -> new CustomMessageException("Income not found"));
+
+        // Retrieve the user associated with this income
+        User user = existingIncome.getUser();
+
+        // Adjust the user's balance by subtracting the income amount (since we are deleting it)
+        user.setBalance(user.getBalance() - existingIncome.getAmount());
+
+        // Save the updated user balance
+        userRepository.save(user);
+
+        // Delete the income record from the database
+        incomeRepository.delete(existingIncome);
+    }
+
 }

@@ -114,4 +114,16 @@ public class IncomeController {
 
 
 
+    @DeleteMapping("/delete/{incomeId}")
+    @Operation(summary = "Delete an income", responses = {
+            @ApiResponse(description = "Successfully deleted the income",
+                    responseCode = "200")
+    })
+    public ResponseEntity<?> deleteIncomeById(@PathVariable Long incomeId) {
+        incomeService.deleteIncomeById(incomeId);
+        return ok(success(null, "Income deleted successfully").getJson());
+    }
+
+
+
 }

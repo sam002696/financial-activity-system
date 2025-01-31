@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Data
@@ -21,6 +22,9 @@ public class Income {
 
     @Enumerated(EnumType.STRING)
     private IncomeCategory category;
+
+    @OneToMany(mappedBy = "income", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contract> contracts;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

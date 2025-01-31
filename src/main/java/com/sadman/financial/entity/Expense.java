@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.Data;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -18,6 +19,9 @@ public class Expense {
 
     @Enumerated(EnumType.STRING)
     private ExpenseCategory category;
+
+    @OneToMany(mappedBy = "expense", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Contract> contracts;
 
     private LocalDate date;
 
