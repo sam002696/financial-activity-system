@@ -26,7 +26,7 @@ import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@Tag(name = "Auth API")
+@Tag(name = "User Management")
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
@@ -40,7 +40,8 @@ public class AuthController {
                     content = @Content(mediaType = "application/json",
                             schema = @Schema(implementation = RegisterRequest.class)))
     })
-    public ResponseEntity<JSONObject> register(@RequestBody @Valid RegisterRequest registerRequest, BindingResult result) {
+    public ResponseEntity<JSONObject> register(@RequestBody @Valid RegisterRequest registerRequest,
+                                               BindingResult result) {
         if (result.hasErrors()) {
             return badRequest().body(error(fieldError(result)).getJson());
         }

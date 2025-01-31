@@ -19,7 +19,7 @@ public class User extends BaseEntity {
     private String email;
     private String password;
 
-    private Double balance;
+    private Double balance = 0.0;
 
     @Enumerated(EnumType.STRING)
     private RoleName role;
