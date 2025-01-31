@@ -97,6 +97,20 @@ public class IncomeController {
     }
 
 
+    @PutMapping("/update/{incomeId}")
+    @Operation(summary = "Update an income", responses = {
+            @ApiResponse(description = "Successfully updated the income",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = IncomeRequest.class)))
+    })
+    public ResponseEntity<JSONObject> updateIncome(
+            @PathVariable Long incomeId,
+            @RequestBody IncomeRequest incomeRequest
+    ) {
+        IncomeResponse updatedIncome = incomeService.updateIncome(incomeId, incomeRequest);
+        return ok(success(updatedIncome, "Income updated successfully").getJson());
+    }
 
 
 

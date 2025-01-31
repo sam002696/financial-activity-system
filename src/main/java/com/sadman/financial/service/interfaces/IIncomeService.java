@@ -12,4 +12,6 @@ public interface IIncomeService {
     IncomeResponse getIncomeById(Long incomeId);
 
     Map<String, Object> search(Integer page, Integer size, String sortBy, String search);
+
+    IncomeResponse updateIncome(Long incomeId, IncomeRequest incomeRequest);
 }

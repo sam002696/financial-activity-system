@@ -84,4 +84,33 @@ public class IncomeService implements IIncomeService {
     }
 
 
+    @Override
+    public IncomeResponse updateIncome(Long incomeId, IncomeRequest incomeRequest) {
+        // Retrieve the existing income by its ID
+        Income existingIncome = incomeRepository.findById(incomeId)
+                .orElseThrow(() -> new CustomMessageException("Income not found"));
+
+        // Retrieve the user associated with this income
+        User user = existingIncome.getUser();
+
+        // Calculate the difference between the old and new income amount
+        Double amountDifference = incomeRequest.getAmount() - existingIncome.getAmount();
+
+        // Update the fields of the income entity with the new values
+        existingIncome.setAmount(incomeRequest.getAmount());
+        existingIncome.setSource(incomeRequest.getSource());
+        existingIncome.setCategory(incomeRequest.getCategory());
+        existingIncome.setDate(incomeRequest.getDate());
+
+        // Save the updated income back to the database
+        incomeRepository.save(existingIncome);
+
+        // Adjust the user's balance based on the amount difference
+        user.setBalance(user.getBalance() + amountDifference);
+        userRepository.save(user);
+
+        // Return the updated income as a response
+        return IncomeResponse.select(existingIncome);
+    }
+
 }
