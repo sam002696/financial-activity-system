@@ -2,10 +2,12 @@ package com.sadman.financial.entity;
 
 import com.sadman.financial.enums.LoanStatus;
 import jakarta.persistence.*;
+import lombok.Data;
 
 import java.time.LocalDate;
 import java.util.List;
 
+@Data
 @Entity
 public class Loan {
     @Id

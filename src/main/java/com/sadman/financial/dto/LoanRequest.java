@@ -9,5 +9,4 @@ import java.time.LocalDate;
 public class LoanRequest {
     private Double amount;
     private LocalDate dueDate;
-    private LoanStatus status;
 }

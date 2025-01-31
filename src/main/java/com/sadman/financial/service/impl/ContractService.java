@@ -1,11 +1,9 @@
 package com.sadman.financial.service.impl;
 
-import com.sadman.financial.entity.Contract;
-import com.sadman.financial.entity.Expense;
-import com.sadman.financial.entity.Income;
-import com.sadman.financial.entity.User;
+import com.sadman.financial.entity.*;
 import com.sadman.financial.enums.ContractStatus;
 import com.sadman.financial.enums.ContractType;
+import com.sadman.financial.exceptions.CustomMessageException;
 import com.sadman.financial.repository.ContractRepository;
 import com.sadman.financial.service.interfaces.IContractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,6 +16,7 @@ public class ContractService implements IContractService {
     @Autowired
     private ContractRepository contractRepository;
 
+    @Override
     public void createContractForIncome(Income income, User user) {
         // Create the contract for the income
         Contract contract = new Contract();
@@ -31,6 +30,7 @@ public class ContractService implements IContractService {
     }
 
 
+    @Override
     public void createContractForExpense(Expense expense, User user) {
         // Create the contract for the expense
         Contract contract = new Contract();
@@ -41,6 +41,39 @@ public class ContractService implements IContractService {
         contract.setTerms("Expense logged");
         contract.setStartDate(LocalDate.now());
         contractRepository.save(contract);             // Save the contract to the repository
+    }
+
+
+    // Create a contract for the loan
+    @Override
+    public Contract createContractForLoan(Loan loan, User user) {
+        Contract contract = new Contract();
+        contract.setLoan(loan);
+        contract.setUser(user);
+        contract.setContractType(ContractType.LOAN);
+        contract.setStatus(ContractStatus.ACTIVE);
+        contract.setTerms("Loan amount: " + loan.getAmount() + ", Repayment due date: " + loan.getDueDate());
+        contract.setStartDate(LocalDate.now());
+        contract.setDueDate(loan.getDueDate());
+
+        // Save the contract
+        contractRepository.save(contract);
+        return contract;
+    }
+
+    // Update the loan repayment status
+    @Override
+    public void updateLoanRepaymentStatus(Loan loan) {
+        Contract contract = contractRepository.findByLoan(loan)
+                .orElseThrow(() -> new CustomMessageException("Contract not found for loan"));
+
+        if (loan.getRemainingAmount() <= 0) {
+            contract.setStatus(ContractStatus.PAID);  // Mark as PAID
+        } else if (contract.getDueDate().isBefore(LocalDate.now())) {
+            contract.setStatus(ContractStatus.OVERDUE);  // Mark as OVERDUE if due date has passed
+        }
+
+        contractRepository.save(contract);
     }
 
 }
