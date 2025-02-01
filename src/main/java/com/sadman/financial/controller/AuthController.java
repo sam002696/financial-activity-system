@@ -3,7 +3,7 @@ package com.sadman.financial.controller;
 import com.sadman.financial.dto.*;
 import com.sadman.financial.entity.User;
 import com.sadman.financial.responses.LoginResponse;
-import com.sadman.financial.service.interfaces.IUserService;
+import com.sadman.financial.service.interfaces.IAuthService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -26,12 +26,12 @@ import static org.springframework.http.ResponseEntity.badRequest;
 import static org.springframework.http.ResponseEntity.ok;
 
 @RestController
-@Tag(name = "User Management")
+@Tag(name = "Auth management")
 @RequestMapping("/api/v1/auth")
 public class AuthController {
 
     @Autowired
-    private IUserService userService;
+    private IAuthService userService;
 
     @PostMapping("/register")
     @Operation(summary = "Register a user", responses = {

@@ -1,13 +1,12 @@
 package com.sadman.financial.service.interfaces;
 
-
-import com.sadman.financial.dto.LoginRequest;
-import com.sadman.financial.dto.RegisterRequest;
-import com.sadman.financial.entity.User;
-import com.sadman.financial.responses.LoginResponse;
+import com.sadman.financial.dto.UserRequest;
+import com.sadman.financial.responses.UserResponse;
 
 public interface IUserService {
-    User register(RegisterRequest user);
+    // Get user by ID
+    UserResponse getUserProfile();
 
-    LoginResponse login(LoginRequest loginRequest);
+    // Update user profile
+    UserResponse updateUserProfile(UserRequest userRequest);
 }

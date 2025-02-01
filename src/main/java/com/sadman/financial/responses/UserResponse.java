@@ -9,25 +9,17 @@ import lombok.Data;
 public class UserResponse {
 
 
-    private Long userId;
+    private Long id;
     private String name;
     private String email;
-    private String phoneNumber;
-    private String profileImage;
+    private Double balance;
 
-    public static UserResponse selectUser(User user) {
+    public static UserResponse select(User user) {
         UserResponse response = new UserResponse();
-        response.setUserId(user.getId());
+        response.setId(user.getId());
         response.setName(user.getName());
         response.setEmail(user.getEmail());
-        return response;
-    }
-
-    public static UserResponse selectUserInfoChange(User user) {
-        UserResponse response = new UserResponse();
-        response.setUserId(user.getId());
-        response.setName(user.getName());
-        response.setEmail(user.getEmail());
+        response.setBalance(user.getBalance());
         return response;
     }
 
