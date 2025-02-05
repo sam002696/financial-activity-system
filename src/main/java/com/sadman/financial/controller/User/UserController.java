@@ -28,7 +28,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    // Get user by ID
+    // Getting the user by ID
     @GetMapping("/profile-info")
     @Operation(summary = "Get user profile", description = "Get the details of the logged-in user", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",
@@ -36,11 +36,13 @@ public class UserController {
             @ApiResponse(responseCode = "404", description = "User not found")
     })
     public ResponseEntity<JSONObject> getUserProfile() {
-        UserResponse userResponse = userService.getUserProfile();  // Fetch user profile based on logged-in user
+        // Fetching user profile based
+        // on logged-in user
+        UserResponse userResponse = userService.getUserProfile();
         return ok(success(userResponse, "Successfully retrieved user profile").getJson());
     }
 
-    // Update user profile
+    // Updating user profile
     @PutMapping("/profile-update")
     @Operation(summary = "Update user profile", description = "Update user details", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",

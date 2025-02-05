@@ -1,7 +1,7 @@
 package com.sadman.financial.constants;
 
 public class MessageConstants {
-    public static final String TODO_TASK_SAVE = "TodoTask saved successfully !!!";
-    public static final String TODO_TASK_UPDATE = "TodoTask updated successfully !!!";
-    public static final String TODO_TASK_DELETE = "TodoTask deleted successfully !!!";
+    public static final String INCOME_ACTIVITY_SAVE = "Income logged successfully !!!";
+    public static final String INCOME_ACTIVITY_UPDATE = "Income updated successfully !!!";
+    public static final String INCOME_ACTIVITY_DELETE = "Income deleted successfully !!!";
 }

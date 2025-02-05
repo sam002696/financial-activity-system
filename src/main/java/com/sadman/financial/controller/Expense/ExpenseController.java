@@ -38,7 +38,7 @@ public class ExpenseController {
     @Autowired
     private CommonDataHelper commonDataHelper;
 
-    // Log new expense
+    // Logging new expense
     @PostMapping("/create")
     @Operation(summary = "Log expense", description = "Log a new expense for the user and update their balance.", responses = {
             @ApiResponse(description = "Successfully logged expense", responseCode = "200",
@@ -55,7 +55,7 @@ public class ExpenseController {
         return ok(success(expenseResponse, "Successfully logged expense").getJson());
     }
 
-    // Get single expense
+    // Getting single expense by its id
     @GetMapping("/{expenseId}")
     @Operation(summary = "Get a single expense", description = "Get an expense by its ID", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",
@@ -67,7 +67,7 @@ public class ExpenseController {
         return ok(success(expenseResponse, "Successfully retrieved expense").getJson());
     }
 
-    // Get list of expenses
+    // Getting list of expenses
     @GetMapping("/list")
     @Operation(summary = "Show lists of all expenses", description = "Show lists of all expenses")
     @ApiResponse(responseCode = "200", content = {
@@ -86,7 +86,7 @@ public class ExpenseController {
         return ok(paginatedSuccess(response).getJson());
     }
 
-    // Update an expense
+    // Updating an expense by its id
     @PutMapping("/update/{expenseId}")
     @Operation(summary = "Update an expense", responses = {
             @ApiResponse(description = "Successfully updated the expense",
@@ -102,7 +102,7 @@ public class ExpenseController {
         return ok(success(updatedExpense, "Expense updated successfully").getJson());
     }
 
-    // Delete an expense
+    // Deleting an expense by its id
     @DeleteMapping("/delete/{expenseId}")
     @Operation(summary = "Delete an expense", responses = {
             @ApiResponse(description = "Successfully deleted the expense",

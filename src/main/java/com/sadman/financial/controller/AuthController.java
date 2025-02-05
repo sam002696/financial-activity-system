@@ -33,6 +33,9 @@ public class AuthController {
     @Autowired
     private IAuthService userService;
 
+
+    // registering a user
+    // to the system
     @PostMapping("/register")
     @Operation(summary = "Register a user", responses = {
             @ApiResponse(description = "Successfully registered",
@@ -52,6 +55,8 @@ public class AuthController {
 
 
 
+    // logging a user
+    // to the system
     @PostMapping("/login")
     @Operation(summary = "Login a user", responses = {
             @ApiResponse(description = "Successfully logged in",

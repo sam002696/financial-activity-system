@@ -25,6 +25,7 @@ public class NotificationController {
         this.notificationService = notificationService;
     }
 
+    // Getting all notifications for a specific user
     @Operation(
             summary = "Get all notifications for a specific user",
             description = "Retrieve all notifications for a specific user based on the userId",
@@ -48,6 +49,8 @@ public class NotificationController {
         return notificationService.getNotificationsForUser(userId);
     }
 
+    // marking notifications as read based on the
+    // notification id
     @Operation(
             summary = "Mark notification as read",
             description = "Marks a notification as read based on the notificationId",

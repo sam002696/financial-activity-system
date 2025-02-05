@@ -43,7 +43,7 @@ public class IncomeController {
 
 
 
-
+    // logging an income
     @PostMapping("/create")
     @Operation(summary = "Log income",
             description = "Log a new income for the user and update their balance.", responses = {
@@ -65,6 +65,7 @@ public class IncomeController {
     }
 
 
+    // getting user income by its id
     @GetMapping("/{incomeId}")
     @Operation(summary = "Get a single income", description = "Get an income by its ID", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",
@@ -76,7 +77,7 @@ public class IncomeController {
         return ok(success(incomeResponse, "Successfully retrieved income").getJson());
     }
 
-
+    // getting list of incomes
     @GetMapping("/list")
     @Operation(summary = "show lists of all incomes", description = "show lists of all incomes")
     @ApiResponse(responseCode = "200", content = {
@@ -96,7 +97,7 @@ public class IncomeController {
         return ok(paginatedSuccess(response).getJson());
     }
 
-
+    // updating user income by its id
     @PutMapping("/update/{incomeId}")
     @Operation(summary = "Update an income", responses = {
             @ApiResponse(description = "Successfully updated the income",
@@ -113,7 +114,7 @@ public class IncomeController {
     }
 
 
-
+    // deleting user income by its id
     @DeleteMapping("/delete/{incomeId}")
     @Operation(summary = "Delete an income", responses = {
             @ApiResponse(description = "Successfully deleted the income",

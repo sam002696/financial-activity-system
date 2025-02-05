@@ -37,11 +37,11 @@ public class ReportController {
                     @ApiResponse(description = "Error generating report", responseCode = "500")
             })
     public ResponseEntity<byte[]> generateIncomeExpenseReport() throws JRException, IOException {
-        // Generate the report using the ReportService
+        // Generating the report using the ReportService
         try {
             JasperPrint jasperPrint = reportService.generateIncomeExpenseReport();
 
-            // Export the report to PDF (you can choose other formats such as XLS, DOCX, etc.)
+            // Exporting the report to PDF
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, byteArrayOutputStream);
 
@@ -49,18 +49,18 @@ public class ReportController {
             byte[] pdfBytes = byteArrayOutputStream.toByteArray();
             System.out.println("Generated PDF byte size: " + pdfBytes.length);
 
-            // Prepare response headers
+            // Preparing the response headers
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "inline; filename=IncomeExpenseReport.pdf");
 
-            // Return the PDF as a byte array
+            // Returning the PDF as a byte array
             return ResponseEntity.ok()
                     .headers(headers)
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(byteArrayOutputStream.toByteArray());
         }
         catch (JRException | IOException e) {
-            // Log the error and return a 500 error
+            // Logging the error and return a 500 error
             System.err.println("Error generating loan status report: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -77,29 +77,32 @@ public class ReportController {
             })
     public ResponseEntity<byte[]> generateLoanStatusReport() {
         try {
-            // Generate the Loan Status Report
+            // Generating the Loan Status Report
             JasperPrint jasperPrint = reportService.generateLoanStatusReport();
 
-            // Export the report to PDF
+            // Exporting the report to PDF
             ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
             JasperExportManager.exportReportToPdfStream(jasperPrint, byteArrayOutputStream);
 
-            // Debugging: Log the byte length of the PDF content
+            // Debugging: Logging the byte length of the PDF content
+            // here debugging because of jasper pdf print error
             byte[] pdfBytes = byteArrayOutputStream.toByteArray();
             System.out.println("Generated PDF byte size: " + pdfBytes.length);
 
-            // Set the response headers to tell the client it's a PDF
+            // Setting the response headers to tell the client it's a PDF
             HttpHeaders headers = new HttpHeaders();
             headers.add("Content-Disposition", "inline; filename=Loan_Status_Report.pdf");
 
-            // Return the PDF as a byte array with the correct content type
+            // Returning the PDF as a byte array with the correct content type
             return ResponseEntity.ok()
                     .headers(headers)
                     .contentType(MediaType.APPLICATION_PDF)
                     .body(pdfBytes);
 
         } catch (JRException | IOException e) {
-            // Log the error and return a 500 error
+            // Logging the error and return a 500 error
+            // debugging of a previous error not being
+            // handled properly
             System.err.println("Error generating loan status report: " + e.getMessage());
             e.printStackTrace();
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

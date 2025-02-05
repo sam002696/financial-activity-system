@@ -33,7 +33,7 @@ public class LoanController {
     @Autowired
     private CommonDataHelper commonDataHelper;
 
-    // Log a new loan
+    // Logging a new loan
     @PostMapping("/create")
     @Operation(summary = "Log a new loan",
             description = "Create a loan with terms including repayment schedule and due date.",
@@ -47,7 +47,7 @@ public class LoanController {
         return ok(success(loanResponse, "Successfully logged loan").getJson());
     }
 
-    // Get a single loan by ID
+    // Getting a single loan by ID
     @GetMapping("/{loanId}")
     @Operation(summary = "Get a single loan", description = "Retrieve a loan by its ID", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",
@@ -59,7 +59,7 @@ public class LoanController {
         return ok(success(loanResponse, "Successfully retrieved loan").getJson());
     }
 
-    // Get list of loans
+    // Getting list of loans
     @GetMapping("/list")
     @Operation(summary = "Show lists of all loans", description = "Show lists of all loans")
     @ApiResponse(responseCode = "200", content = {
@@ -78,7 +78,7 @@ public class LoanController {
         return ok(paginatedSuccess(response).getJson());
     }
 
-    // Repay loan
+    // Repaying a loan by its id
     @PutMapping("/repay/{loanId}")
     @Operation(summary = "Repay loan", description = "Repay a loan and update the status and balance", responses = {
             @ApiResponse(responseCode = "200", content = @Content(mediaType = "application/json",
@@ -89,7 +89,7 @@ public class LoanController {
         return ok(success(updatedLoan, "Loan repayment successful").getJson());
     }
 
-    // Delete loan
+    // Deleting a loan by its id
     @DeleteMapping("/delete/{loanId}")
     @Operation(summary = "Delete a loan", description = "Delete a loan by its ID", responses = {
             @ApiResponse(responseCode = "200", description = "Successfully deleted loan")
