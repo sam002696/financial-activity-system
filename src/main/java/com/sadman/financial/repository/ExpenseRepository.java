@@ -14,4 +14,8 @@ public interface ExpenseRepository extends JpaRepository<Expense, Long> {
                     "LIKE LOWER(CONCAT('%', :search, '%'))) ")
     Page<Expense> search(String search, Pageable pageable);
 
+
+    @Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user.id = :userId")
+    double findTotalExpenseByUser(Long userId);
+
 }

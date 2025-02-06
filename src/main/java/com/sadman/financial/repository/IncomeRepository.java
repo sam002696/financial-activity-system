@@ -13,5 +13,9 @@ public interface IncomeRepository extends JpaRepository<Income, Long> {
             countQuery = "SELECT COUNT(i) FROM Income i WHERE (:search IS NULL OR :search = '' OR LOWER(i.source) LIKE LOWER(CONCAT('%', :search, '%'))) ")
     Page<Income> search(String search, Pageable pageable);
 
+
+    @Query("SELECT SUM(i.amount) FROM Income i WHERE i.user.id = :userId")
+    double findTotalIncomeByUser(Long userId);
+
 }
 

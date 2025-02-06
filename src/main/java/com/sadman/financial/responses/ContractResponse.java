@@ -1,9 +1,6 @@
 package com.sadman.financial.responses;
 
 import com.sadman.financial.entity.Contract;
-import com.sadman.financial.entity.Income;
-import com.sadman.financial.entity.Expense;
-import com.sadman.financial.entity.Loan;
 import com.sadman.financial.enums.ContractStatus;
 import com.sadman.financial.enums.ContractType;
 import lombok.AllArgsConstructor;
