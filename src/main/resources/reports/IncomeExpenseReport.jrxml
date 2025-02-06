@@ -146,10 +146,10 @@ ORDER BY i.year, i.month;
 			</staticText>
 		</band>
 	</title>
-	<detail>
-		<band height="383" splitType="Stretch">
+	<summary>
+		<band height="163" splitType="Stretch">
 			<componentElement>
-				<reportElement x="22" y="40" width="508" height="200" uuid="06bcfb6f-34f7-4d19-ad52-d2e8275f38ef">
+				<reportElement isPrintRepeatedValues="false" x="20" y="37" width="508" height="60" uuid="06bcfb6f-34f7-4d19-ad52-d2e8275f38ef">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -234,14 +234,5 @@ ORDER BY i.year, i.month;
 				</jr:table>
 			</componentElement>
 		</band>
-	</detail>
-	<columnFooter>
-		<band height="45" splitType="Stretch"/>
-	</columnFooter>
-	<pageFooter>
-		<band height="54" splitType="Stretch"/>
-	</pageFooter>
-	<summary>
-		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>

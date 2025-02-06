@@ -143,10 +143,10 @@
 			</staticText>
 		</band>
 	</title>
-	<detail>
-		<band height="397" splitType="Stretch">
+	<summary>
+		<band height="167" splitType="Stretch">
 			<componentElement>
-				<reportElement x="0" y="10" width="555" height="140" uuid="b9b0ea8f-f923-4896-8a43-193ef283a2a1">
+				<reportElement isPrintRepeatedValues="false" x="0" y="38" width="555" height="60" uuid="b9b0ea8f-f923-4896-8a43-193ef283a2a1">
 					<property name="com.jaspersoft.studio.layout" value="com.jaspersoft.studio.editor.layout.VerticalRowLayout"/>
 					<property name="com.jaspersoft.studio.table.style.table_header" value="Table_TH"/>
 					<property name="com.jaspersoft.studio.table.style.column_header" value="Table_CH"/>
@@ -242,8 +242,5 @@
 				</jr:table>
 			</componentElement>
 		</band>
-	</detail>
-	<summary>
-		<band height="42" splitType="Stretch"/>
 	</summary>
 </jasperReport>

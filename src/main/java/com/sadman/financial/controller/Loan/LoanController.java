@@ -1,7 +1,9 @@
 package com.sadman.financial.controller.Loan;
+import com.sadman.financial.dto.ExpenseRequest;
 import com.sadman.financial.dto.LoanRequest;
 import com.sadman.financial.entity.Loan;
 import com.sadman.financial.helpers.CommonDataHelper;
+import com.sadman.financial.responses.ExpenseResponse;
 import com.sadman.financial.responses.LoanResponse;
 import com.sadman.financial.service.impl.LoanService;
 import com.sadman.financial.utils.PaginatedResponse;
@@ -76,6 +78,22 @@ public class LoanController {
         List<LoanResponse> responses = loanList.stream().map(LoanResponse::select).toList();
         commonDataHelper.getCommonData(page, size, map, response, responses);
         return ok(paginatedSuccess(response).getJson());
+    }
+
+    // Updating an loan by its id
+    @PutMapping("/update/{loanId}")
+    @Operation(summary = "Update an loan", responses = {
+            @ApiResponse(description = "Successfully updated the loan",
+                    responseCode = "200",
+                    content = @Content(mediaType = "application/json",
+                            schema = @Schema(implementation = LoanRequest.class)))
+    })
+    public ResponseEntity<JSONObject> updateLoan(
+            @PathVariable Long loanId,
+            @RequestBody LoanRequest loanRequest
+    ) {
+        LoanResponse updatedLoan = loanService.updateLoan(loanId, loanRequest);
+        return ok(success(updatedLoan, "Loan updated successfully").getJson());
     }
 
     // Repaying a loan by its id

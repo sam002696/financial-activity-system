@@ -77,6 +77,34 @@ public class LoanService implements ILoanService {
                 page, size);
     }
 
+
+
+    @Override
+    public LoanResponse updateLoan(Long loanId, LoanRequest loanRequest) {
+        // Retrieve the existing expense
+        Loan existingLoan = loanRepository.findById(loanId)
+                .orElseThrow(() -> new CustomMessageException("Loan not found"));
+
+        // Retrieve the user associated with the expense
+        User user = existingLoan.getUser();
+
+        // Validate that the expense amount is greater than zero
+        if (loanRequest.getAmount() <= 0) {
+            throw new CustomMessageException("Expense amount must be greater than zero.");
+        }
+
+        // Update the expense details
+        existingLoan.setAmount(loanRequest.getAmount());
+        existingLoan.setDueDate(loanRequest.getDueDate());
+
+        // Save the updated expense
+        loanRepository.save(existingLoan);
+
+
+        // Return the updated expense
+        return LoanResponse.select(existingLoan);
+    }
+
     // Repay loan
     @Override
     public LoanResponse repayLoan(Long loanId, Double amount) {

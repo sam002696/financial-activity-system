@@ -14,6 +14,8 @@ public interface ILoanService {
 
     Map<String, Object> search(Integer page, Integer size, String sortBy, String search);
 
+    LoanResponse updateLoan(Long loanId, LoanRequest loanRequest);
+
     // Repay loan
     LoanResponse repayLoan(Long loanId, Double amount);
 
