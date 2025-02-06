@@ -12,4 +12,13 @@ public interface IContractService {
 
     // Update the loan repayment status
     void updateLoanRepaymentStatus(Loan loan);
+
+    // Fetch contract for Income
+    Contract getContractForIncome(Long incomeId);
+
+    // Fetch contract for Expense
+    Contract getContractForExpense(Long expenseId);
+
+    // Fetch contract for Loan
+    Contract getContractForLoan(Long loanId);
 }

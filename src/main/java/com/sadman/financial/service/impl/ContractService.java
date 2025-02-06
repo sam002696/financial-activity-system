@@ -76,4 +76,34 @@ public class ContractService implements IContractService {
         contractRepository.save(contract);
     }
 
+
+    // Fetch contract for Income
+    @Override
+    public Contract getContractForIncome(Long incomeId) {
+
+        Contract existingContract = contractRepository.findById(incomeId)
+                .orElseThrow(() -> new CustomMessageException("income not found in the contract"));
+        return existingContract;
+    }
+
+    // Fetch contract for Expense
+    @Override
+    public Contract getContractForExpense(Long expenseId) {
+
+        Contract existingContract = contractRepository.findById(expenseId)
+                .orElseThrow(() -> new CustomMessageException("expense not found in the contract"));
+        return existingContract;
+
+
+    }
+
+    // Fetch contract for Loan
+    @Override
+    public Contract getContractForLoan(Long loanId) {
+
+        Contract existingContract = contractRepository.findById(loanId)
+                .orElseThrow(() -> new CustomMessageException("loan not found in the contract"));
+        return existingContract;
+    }
+
 }
