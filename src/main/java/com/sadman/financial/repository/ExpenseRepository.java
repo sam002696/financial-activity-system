@@ -9,10 +9,12 @@ import org.springframework.data.jpa.repository.Query;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     @Query(value = "SELECT e FROM Expense e WHERE (:search IS NULL OR :search = '' OR LOWER(e.category) " +
-            "LIKE LOWER(CONCAT('%', :search, '%'))) AND e.user.id = :userId ORDER BY e.date",
+            "LIKE LOWER(CONCAT('%', :search, '%'))) AND e.user.id = :userId " +
+            "ORDER BY e.createdAt DESC",  // Sorting by createdAt in descending order
             countQuery = "SELECT COUNT(e) FROM Expense e WHERE (:search IS NULL OR :search = '' OR LOWER(e.category) " +
                     "LIKE LOWER(CONCAT('%', :search, '%'))) AND e.user.id = :userId")
     Page<Expense> search(String search, Long userId, Pageable pageable);
+
 
 
 

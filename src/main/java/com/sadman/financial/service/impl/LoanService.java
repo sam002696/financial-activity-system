@@ -58,7 +58,7 @@ public class LoanService implements ILoanService {
         // Create a contract for the loan
         contractService.createContractForLoan(loan, user);
 
-        notificationService.sendNotification(userId, "Expense",
+        notificationService.sendNotification(userId, "Loan",
                  " - " + loan.getAmount());
         // Return the loan response
         return LoanResponse.select(loan);

@@ -9,7 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
-public class Loan {
+public class Loan extends BaseEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
