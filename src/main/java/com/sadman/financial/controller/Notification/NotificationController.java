@@ -1,17 +1,22 @@
 package com.sadman.financial.controller.Notification;
 
 import com.sadman.financial.entity.Notification;
+import com.sadman.financial.responses.NotificationResponse;
 import com.sadman.financial.service.impl.NotificationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static com.sadman.financial.utils.ResponseBuilder.success;
+import static org.springframework.http.ResponseEntity.ok;
 
 @Tag(name = "Notifications")
 @RestController
@@ -35,7 +40,7 @@ public class NotificationController {
                             responseCode = "200",
                             content = @Content(
                                     mediaType = "application/json",
-                                    schema = @Schema(implementation = Notification.class)
+                                    schema = @Schema(implementation = NotificationResponse.class)
                             )
                     ),
                     @ApiResponse(
@@ -45,9 +50,11 @@ public class NotificationController {
             }
     )
     @GetMapping("/user/{userId}")
-    public List<Notification> getNotifications(@PathVariable Long userId) {
-        return notificationService.getNotificationsForUser(userId);
+    public ResponseEntity<JSONObject> getNotifications(@PathVariable Long userId) {
+        List<NotificationResponse> notificationResponses = notificationService.getNotificationsForUser(userId);
+        return ok(success(notificationResponses, "Successfully retrieved user notifications").getJson());
     }
+
 
     // marking notifications as read based on the
     // notification id

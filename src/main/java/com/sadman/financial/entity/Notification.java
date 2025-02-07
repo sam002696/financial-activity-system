@@ -2,11 +2,13 @@ package com.sadman.financial.entity;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 
 
 @Data
 @Entity
-public class Notification {
+@Table(name = "notification")
+public class Notification extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -19,17 +21,6 @@ public class Notification {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
+    @ToString.Exclude // Prevent infinite recursion
     private User user;
-
-    public Notification() {
-    }
-
-    public Notification(String message, Long userId) {
-        this.message = message;
-        this.isRead = false;  // Default value for new notifications
-        this.user = new User();
-        this.user.setId(userId);
-    }
-
-    // Getters and setters
 }

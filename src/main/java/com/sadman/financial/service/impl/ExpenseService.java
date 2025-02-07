@@ -28,6 +28,9 @@ public class ExpenseService implements IExpenseService {
     @Autowired
     private ContractService contractService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public ExpenseResponse logExpense(ExpenseRequest expenseRequest) {
         // Retrieve the user from the SecurityContext (JWT)
@@ -66,6 +69,9 @@ public class ExpenseService implements IExpenseService {
 
         // Create a contract for the expense
         contractService.createContractForExpense(expense, user);
+
+        notificationService.sendNotification(userId, "Expense",
+                 " - " + expense.getAmount());
 
         // Return the response
         return ExpenseResponse.select(expense);

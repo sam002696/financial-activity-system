@@ -29,6 +29,9 @@ public class LoanService implements ILoanService {
     @Autowired
     private ContractService contractService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     // Log a new loan
     @Override
     public LoanResponse logLoan(LoanRequest loanRequest) {
@@ -55,6 +58,8 @@ public class LoanService implements ILoanService {
         // Create a contract for the loan
         contractService.createContractForLoan(loan, user);
 
+        notificationService.sendNotification(userId, "Expense",
+                 " - " + loan.getAmount());
         // Return the loan response
         return LoanResponse.select(loan);
     }

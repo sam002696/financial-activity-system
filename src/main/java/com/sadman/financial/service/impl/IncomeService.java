@@ -28,6 +28,9 @@ public class IncomeService implements IIncomeService {
     @Autowired
     private ContractService contractService;
 
+    @Autowired
+    private NotificationService notificationService;
+
     @Override
     public Income logIncome(IncomeRequest incomeRequest) {
         // Retrieve the user from the SecurityContext (JWT)
@@ -60,6 +63,9 @@ public class IncomeService implements IIncomeService {
 
         // Create a contract for the income (contract enforcement logic)
         contractService.createContractForIncome(income, user);
+
+
+        notificationService.sendNotification(userId, "Income", income.getSource() + " - " + income.getAmount());
 
         // Return the created income
         return income;
