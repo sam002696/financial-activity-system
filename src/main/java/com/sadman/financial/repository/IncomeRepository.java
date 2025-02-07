@@ -9,9 +9,9 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface IncomeRepository extends JpaRepository<Income, Long> {
 
-    @Query(value = "SELECT i FROM Income i WHERE (:search IS NULL OR :search = '' OR LOWER(i.source) LIKE LOWER(CONCAT('%', :search, '%'))) ORDER BY i.date",
-            countQuery = "SELECT COUNT(i) FROM Income i WHERE (:search IS NULL OR :search = '' OR LOWER(i.source) LIKE LOWER(CONCAT('%', :search, '%'))) ")
-    Page<Income> search(String search, Pageable pageable);
+    @Query(value = "SELECT i FROM Income i WHERE (:search IS NULL OR :search = '' OR LOWER(i.source) LIKE LOWER(CONCAT('%', :search, '%'))) AND i.user.id = :userId ORDER BY i.date",
+            countQuery = "SELECT COUNT(i) FROM Income i WHERE (:search IS NULL OR :search = '' OR LOWER(i.source) LIKE LOWER(CONCAT('%', :search, '%'))) AND i.user.id = :userId")
+    Page<Income> search(String search, Long userId, Pageable pageable);
 
 
     @Query("SELECT SUM(i.amount) FROM Income i WHERE i.user.id = :userId")

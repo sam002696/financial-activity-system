@@ -11,13 +11,15 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
     @Query(value = "SELECT l FROM Loan l WHERE " +
             "(:search IS NULL OR :search = '' OR LOWER(l.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
             "OR CAST(l.amount AS string) LIKE LOWER(CONCAT('%', :search, '%')) " +  // Convert amount to String for searching
-            "OR LOWER(CAST(l.dueDate AS string)) LIKE LOWER(CONCAT('%', :search, '%'))) " +  // Convert date to string for searching
-            "ORDER BY l.dueDate",
+            "OR LOWER(CAST(l.dueDate AS string)) LIKE LOWER(CONCAT('%', :search, '%'))) " +
+            "AND l.user.id = :userId ORDER BY l.dueDate",
             countQuery = "SELECT COUNT(l) FROM Loan l WHERE " +
                     "(:search IS NULL OR :search = '' OR LOWER(l.status) LIKE LOWER(CONCAT('%', :search, '%')) " +
                     "OR CAST(l.amount AS string) LIKE LOWER(CONCAT('%', :search, '%')) " +
-                    "OR LOWER(CAST(l.dueDate AS string)) LIKE LOWER(CONCAT('%', :search, '%'))) ")
-    Page<Loan> search(String search, Pageable pageable);
+                    "OR LOWER(CAST(l.dueDate AS string)) LIKE LOWER(CONCAT('%', :search, '%'))) " +
+                    "AND l.user.id = :userId")
+    Page<Loan> search(String search, Long userId, Pageable pageable);
+
 
 
     @Query("SELECT SUM(l.amount) FROM Loan l WHERE l.user.id = :userId")

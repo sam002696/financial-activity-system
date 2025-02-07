@@ -77,9 +77,15 @@ public class IncomeService implements IIncomeService {
 
     @Override
     public Map<String, Object> search(Integer page, Integer size, String sortBy, String search) {
+
+
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userPrincipal.getId();
+
+
         ServiceHelper<Income> serviceHelper = new ServiceHelper<>(Income.class);
         return serviceHelper.getList(
-                incomeRepository.search(search, serviceHelper.getPageable(sortBy, page, size)),
+                incomeRepository.search(search, userId, serviceHelper.getPageable(sortBy, page, size)),
                 page, size);
     }
 

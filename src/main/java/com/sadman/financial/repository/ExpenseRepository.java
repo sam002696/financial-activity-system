@@ -9,10 +9,11 @@ import org.springframework.data.jpa.repository.Query;
 public interface ExpenseRepository extends JpaRepository<Expense, Long> {
 
     @Query(value = "SELECT e FROM Expense e WHERE (:search IS NULL OR :search = '' OR LOWER(e.category) " +
-            "LIKE LOWER(CONCAT('%', :search, '%'))) ORDER BY e.date",
+            "LIKE LOWER(CONCAT('%', :search, '%'))) AND e.user.id = :userId ORDER BY e.date",
             countQuery = "SELECT COUNT(e) FROM Expense e WHERE (:search IS NULL OR :search = '' OR LOWER(e.category) " +
-                    "LIKE LOWER(CONCAT('%', :search, '%'))) ")
-    Page<Expense> search(String search, Pageable pageable);
+                    "LIKE LOWER(CONCAT('%', :search, '%'))) AND e.user.id = :userId")
+    Page<Expense> search(String search, Long userId, Pageable pageable);
+
 
 
     @Query("SELECT SUM(e.amount) FROM Expense e WHERE e.user.id = :userId")

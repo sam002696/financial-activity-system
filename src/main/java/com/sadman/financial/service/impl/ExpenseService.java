@@ -82,9 +82,13 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public Map<String, Object> search(Integer page, Integer size, String sortBy, String search) {
+
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userPrincipal.getId();
+
         ServiceHelper<Expense> serviceHelper = new ServiceHelper<>(Expense.class);
         return serviceHelper.getList(
-                expenseRepository.search(search, serviceHelper.getPageable(sortBy, page, size)),
+                expenseRepository.search(search, userId, serviceHelper.getPageable(sortBy, page, size)),
                 page, size);
     }
 

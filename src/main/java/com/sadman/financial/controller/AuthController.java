@@ -50,7 +50,7 @@ public class AuthController {
         }
 
         User user = userService.register(registerRequest);
-        return ok(success(user, "User added successfully").getJson());
+        return ok(success(user, "User registration is successful").getJson());
     }
 
 

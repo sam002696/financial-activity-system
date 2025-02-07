@@ -71,9 +71,13 @@ public class LoanService implements ILoanService {
 
     @Override
     public Map<String, Object> search(Integer page, Integer size, String sortBy, String search) {
+
+        UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Long userId = userPrincipal.getId();
+
         ServiceHelper<Loan> serviceHelper = new ServiceHelper<>(Loan.class);
         return serviceHelper.getList(
-                loanRepository.search(search, serviceHelper.getPageable(sortBy, page, size)),
+                loanRepository.search(search,userId, serviceHelper.getPageable(sortBy, page, size)),
                 page, size);
     }
 
