@@ -7,18 +7,18 @@ public interface IContractService {
 
     void createContractForExpense(Expense expense, User user);
 
-    // Create a contract for the loan
+    // Creating a contract for the loan
     Contract createContractForLoan(Loan loan, User user);
 
-    // Update the loan repayment status
+    // Updating the loan repayment status
     void updateLoanRepaymentStatus(Loan loan);
 
-    // Fetch contract for Income
+    // Fetching contract for Income
     Contract getContractForIncome(Long incomeId);
 
-    // Fetch contract for Expense
+    // Fetching contract for Expense
     Contract getContractForExpense(Long expenseId);
 
-    // Fetch contract for Loan
+    // Fetching contract for Loan
     Contract getContractForLoan(Long loanId);
 }

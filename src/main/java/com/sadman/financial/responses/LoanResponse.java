@@ -15,7 +15,7 @@ public class LoanResponse {
     private Double amount;
     private Double paidAmount;
     private Double remainingAmount;
-    private LocalDate dueDate; // Correct field for due date
+    private LocalDate dueDate;
     private LoanStatus status;
     private Long userId;
 
@@ -26,9 +26,9 @@ public class LoanResponse {
         response.setAmount(loan.getAmount());
         response.setPaidAmount(loan.getPaidAmount());
         response.setRemainingAmount(loan.getRemainingAmount());
-        response.setDueDate(loan.getDueDate()); // Correct field for due date
+        response.setDueDate(loan.getDueDate());
         response.setStatus(loan.getStatus());
-        response.setUserId(loan.getUser().getId()); // Assuming you want the user ID in the response
+        response.setUserId(loan.getUser().getId());
 
         return response;
     }

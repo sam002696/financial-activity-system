@@ -24,7 +24,7 @@ public class ContractController {
     @Autowired
     private ContractService contractService;
 
-    // Fetch contract for Income
+    // Fetching contract for Income
     @GetMapping("/income/{incomeId}")
     @Operation(summary = "Get contract for income", description = "Fetch contract for the given income activity")
     @ApiResponse(responseCode = "200", description = "Contract successfully fetched")
@@ -34,7 +34,7 @@ public class ContractController {
         return ok(success(contractResponse, "Successfully retrieved income contract").getJson());
     }
 
-    // Fetch contract for Expense
+    // Fetching contract for Expense
     @GetMapping("/expense/{expenseId}")
     @Operation(summary = "Get contract for expense", description = "Fetch contract for the given expense activity")
     @ApiResponse(responseCode = "200", description = "Contract successfully fetched")
@@ -45,7 +45,7 @@ public class ContractController {
         return ok(success(contractResponse, "Successfully retrieved expense contract").getJson());
     }
 
-    // Fetch contract for Loan
+    // Fetching contract for Loan
     @GetMapping("/loan/{loanId}")
     @Operation(summary = "Get contract for loan", description = "Fetch contract for the given loan")
     @ApiResponse(responseCode = "200", description = "Contract successfully fetched")

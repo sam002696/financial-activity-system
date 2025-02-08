@@ -90,81 +90,81 @@ public class LoanService implements ILoanService {
 
     @Override
     public LoanResponse updateLoan(Long loanId, LoanRequest loanRequest) {
-        // Retrieve the existing expense
+        // Retrieving the existing expense
         Loan existingLoan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new CustomMessageException("Loan not found"));
 
-        // Retrieve the user associated with the expense
+        // Retrieving the user associated with the expense
         User user = existingLoan.getUser();
 
-        // Validate that the expense amount is greater than zero
+        // Validating that the expense amount is greater than zero
         if (loanRequest.getAmount() <= 0) {
             throw new CustomMessageException("Expense amount must be greater than zero.");
         }
 
-        // Update the expense details
+        // Updating the expense details
         existingLoan.setAmount(loanRequest.getAmount());
         existingLoan.setRemainingAmount(loanRequest.getAmount());
         existingLoan.setDueDate(loanRequest.getDueDate());
 
-        // Save the updated expense
+        // Saving the updated expense
         loanRepository.save(existingLoan);
 
 
-        // Return the updated expense
+        // Returning the updated expense
         return LoanResponse.select(existingLoan);
     }
 
     // Repay loan
     @Override
     public LoanResponse repayLoan(Long loanId, Double amount) {
-        // Retrieve the user from the SecurityContext (JWT)
+        // Retrieving the user from the SecurityContext (JWT)
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userPrincipal.getId();
 
-        // Retrieve the User entity from the database
+        // Retrieving the User entity from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomMessageException("User not found with id: " + userId));
 
-        // Retrieve the Loan entity from the database
+        // Retrieving the Loan entity from the database
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new CustomMessageException("Loan not found"));
 
-        // Check if the amount being repaid is valid
+        // Checking if the amount being repaid is valid
         if (amount <= 0) {
             throw new CustomMessageException("Repayment amount must be greater than zero.");
         }
 
-        // Check if the loan has already been fully paid
+        // Checking if the loan has already been fully paid
         if (loan.getRemainingAmount() <= 0) {
             throw new CustomMessageException("Loan is already fully paid.");
         }
 
-        // Check if the user has enough balance to make the repayment
+        // Checking if the user has enough balance to make the repayment
         if (user.getBalance() < amount) {
             throw new CustomMessageException("Insufficient balance to make the repayment.");
         }
 
-        // Update the paid amount and remaining amount for the loan
+        // Updating the paid amount and remaining amount for the loan
         loan.setPaidAmount(loan.getPaidAmount() + amount);
         loan.setRemainingAmount(loan.getRemainingAmount() - amount);
 
-        // If the loan is fully paid, update the status
+        // If the loan is fully paid, updating the status
         if (loan.getRemainingAmount() <= 0) {
             loan.setStatus(LoanStatus.PAID);
         }
 
-        // Save the updated loan
+        // Saving the updated loan
         loanRepository.save(loan);
 
-        // Update the user's balance by deducting the repayment amount
+        // Updating the user's balance by deducting the repayment amount
         user.setBalance(user.getBalance() - amount);
         userRepository.save(user);
 
-        // Update the contract status based on the repayment
+        // Updating the contract status based on the repayment
         contractService.updateLoanRepaymentStatus(loan);
 
-        // Return the loan response
+        // Returning the loan response
         return LoanResponse.select(loan);
     }
 
@@ -175,7 +175,7 @@ public class LoanService implements ILoanService {
         Loan loan = loanRepository.findById(loanId)
                 .orElseThrow(() -> new CustomMessageException("Loan not found"));
 
-        // Delete the loan
+        // Deleting the loan
         loanRepository.delete(loan);
     }
 }

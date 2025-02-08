@@ -13,7 +13,7 @@ public class ExpenseResponse {
     private Double amount;
     private ExpenseCategory category;
     private LocalDate date;
-    private Long userId;  // assuming we need to return the userId too
+    private Long userId;
 
     // Method to map an Expense entity to an ExpenseResponse
     public static ExpenseResponse select(Expense expense) {

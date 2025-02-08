@@ -17,16 +17,15 @@ public class Contract extends BaseEntity {
     private Long id;
 
     @Enumerated(EnumType.STRING)
-    private ContractType contractType; // Type of the contract: Loan, Income, Expense
+    private ContractType contractType;
 
-    private String terms; // Terms of the contract, such as repayment schedule for loans or category for expenses
+    private String terms;
 
     @Enumerated(EnumType.STRING)
-    private ContractStatus status; // Status: ACTIVE, COMPLETED, CANCELLED, IN_PROGRESS, PAID, OVERDUE
+    private ContractStatus status;
 
-    private LocalDate startDate; // Date the contract was initiated
-
-    private LocalDate dueDate; // Due date for loans, or end date for activities
+    private LocalDate startDate;
+    private LocalDate dueDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")

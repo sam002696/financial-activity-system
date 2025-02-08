@@ -29,7 +29,7 @@ public class DashboardService {
     private LoanRepository loanRepository;
 
     public DashboardResponse getDashboardData() {
-        // Fetching user by a hardcoded ID for simplicity (should be dynamic based on logged-in user)
+
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userPrincipal.getId();
 

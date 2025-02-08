@@ -39,10 +39,10 @@ public class ReportService {
     // This method will obtain and return the connection from the DataSource
     private Connection getConnection() throws SQLException {
         logger.info("Establishing connection to the database...");
-        return DataSourceUtils.getConnection(dataSource);  // Fetch the connection from the DataSource
+        return DataSourceUtils.getConnection(dataSource);  // Fetching the connection from the DataSource
     }
 
-    // Generate the Income vs Expenses Report
+    // Generating the Income vs Expenses Report
     public JasperPrint generateIncomeExpenseReport() throws JRException, IOException {
         logger.info("Generating Income vs Expense Report...");
 
@@ -52,7 +52,7 @@ public class ReportService {
 
         logger.info("Retrieved userId from JWT: {}", userId);
 
-        // Retrieve the User entity from the database
+        // Retrieving the User entity from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     logger.error("User not found with id: {}", userId);
@@ -62,24 +62,24 @@ public class ReportService {
         logger.info("User found with id: {}", userId);
 
 
-        // Load the IncomeExpenseReport from the resources folder
+        // Loading the IncomeExpenseReport from the resources folder
         Resource reportResource = resourceLoader.getResource("classpath:reports/IncomeExpenseReport.jrxml");
 
-        // Check if the report file is found
+        // Checking if the report file is found
         if (!reportResource.exists()) {
             logger.error("IncomeExpenseReport.jrxml not found in the classpath.");
             throw new JRException("IncomeExpenseReport.jrxml not found in the classpath.");
         }
         logger.info("Report file loaded: {}", reportResource.getURI());
 
-        // Compile the JRXML to Jasper (compiled report)
+        // Compiling the JRXML to Jasper (compiled report)
         JasperReport jasperReport = compileReport(reportResource);
 
-        // Set parameters for the report
+        // Setting parameters for the report
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("userId", userId);
 
-        // Fill the report with data
+        // Filling the report with data
         try (Connection connection = getConnection()) {
             logger.info("Filling the report with data...");
             parameters.put("REPORT_CONNECTION", connection);  // Pass connection to report
@@ -90,17 +90,17 @@ public class ReportService {
         }
     }
 
-    // Generate the Loan Status Report
+    // Generating the Loan Status Report
     public JasperPrint generateLoanStatusReport() throws JRException, IOException {
         logger.info("Generating Loan Status Report...");
 
-        // Retrieve the userId from the SecurityContext (JWT)
+        // Retrieving the userId from the SecurityContext (JWT)
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userPrincipal.getId();
 
         logger.info("Retrieved userId from JWT: {}", userId);
 
-        // Retrieve the User entity from the database
+        // Retrieving the User entity from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> {
                     logger.error("User not found with id: {}", userId);
@@ -109,24 +109,24 @@ public class ReportService {
 
         logger.info("User found with id: {}", userId);
 
-        // Load the LoanStatusReport from the resources folder
+        // Loading the LoanStatusReport from the resources folder
         Resource reportResource = resourceLoader.getResource("classpath:reports/LoanStatus.jrxml");
 
-        // Check if the report file is found
+        // Checking if the report file is found
         if (!reportResource.exists()) {
             logger.error("LoanStatus.jrxml not found in the classpath.");
             throw new JRException("LoanStatus.jrxml not found in the classpath.");
         }
         logger.info("Report file loaded: {}", reportResource.getURI());
 
-        // Compile the JRXML to Jasper (compiled report)
+        // Compiling the JRXML to Jasper (compiled report)
         JasperReport jasperReport = compileReport(reportResource);
 
-        // Set parameters for the report
+        // Setting parameters for the report
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("userId", userId);  // Pass the userId parameter dynamically
 
-        // Fill the report with data
+        // Filling the report with data
         try (Connection connection = getConnection()) {
             logger.info("Filling Loan Status Report with data for userId: {}", userId);
             return JasperFillManager.fillReport(jasperReport, parameters, connection);

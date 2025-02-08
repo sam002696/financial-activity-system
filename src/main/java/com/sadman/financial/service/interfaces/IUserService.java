@@ -4,9 +4,9 @@ import com.sadman.financial.dto.UserRequest;
 import com.sadman.financial.responses.UserResponse;
 
 public interface IUserService {
-    // Get user by ID
+    // Getting user by ID
     UserResponse getUserProfile();
 
-    // Update user profile
+    // Updating user profile
     UserResponse updateUserProfile(UserRequest userRequest);
 }

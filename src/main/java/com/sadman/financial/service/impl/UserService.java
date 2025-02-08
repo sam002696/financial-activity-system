@@ -17,7 +17,7 @@ public class UserService implements IUserService {
     @Autowired
     private UserRepository userRepository;
 
-    // Get user by ID
+    // Getting user by ID
     @Override
     public UserResponse getUserProfile() {
 
@@ -30,7 +30,7 @@ public class UserService implements IUserService {
         return UserResponse.select(user);
     }
 
-    // Update user profile
+    // Updating user profile
     @Override
     public UserResponse updateUserProfile(UserRequest userRequest) {
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();

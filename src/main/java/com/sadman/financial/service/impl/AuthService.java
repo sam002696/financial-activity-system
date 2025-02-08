@@ -40,10 +40,10 @@ public class AuthService implements IAuthService {
     public User register(RegisterRequest reqUser) {
         User user = new User();
         if (reqUser.getRole() == null || reqUser.getRole().isEmpty()) {
-            reqUser.setRole("USER");  // Default to "USER" if role is null or empty
+            reqUser.setRole("USER");  // Defaulting to "USER" if role is null or empty
         }
 
-        // Validate role to ensure it's a valid enum
+        // Validating role to ensure it's a valid enum
         try {
             user.setRole(RoleName.valueOf(reqUser.getRole().toUpperCase()));
         } catch (IllegalArgumentException e) {

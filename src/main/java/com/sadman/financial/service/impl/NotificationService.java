@@ -37,51 +37,51 @@ public class NotificationService {
 
     // Generic method for sending notifications to Express
     public void sendNotification(Long userId, String activityType, String activityDetails) {
-        // Construct the notification message
+        // Constructing the notification message
         String message = activityType + " has been logged: " + activityDetails;
 
-        // Create the notification object
+        // Creating the notification object
         Notification notification = new Notification();
         notification.setMessage(message);
         notification.setRead(false);  // Default value for new notifications
 
-        // Set the user by fetching it from the database
+        // Setting the user by fetching it from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomMessageException("User not found with id: " + userId));
         notification.setUser(user);
 
-        // Save the notification in the database
+        // Saving the notification in the database
         notificationRepository.save(notification);
 
-        // Send the notification to the Express server
+        // Sending the notification to the Express server
         sendNotificationToExpress(notification);
     }
 
-    // Send notification to Express.js WebSocket server
+    // Sending notification to Express.js WebSocket server
     private void sendNotificationToExpress(Notification notification) {
         // Prepare notification data
         Map<String, Object> notificationData = new HashMap<>();
         notificationData.put("message", notification.getMessage());
         notificationData.put("userId", notification.getUser().getId());
 
-        // Set HTTP headers to indicate JSON content
+        // Setting HTTP headers to indicate JSON content
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
 
-        // Create HttpEntity with the notification data and headers
+        // Creating HttpEntity with the notification data and headers
         HttpEntity<Map<String, Object>> entity = new HttpEntity<>(notificationData, headers);
 
         // URL of the Express server's endpoint
         String expressApiUrl = "http://localhost:3000/send-notification";
 
-        // Send the notification to Express via HTTP (POST method)
+        // Sending the notification to Express via HTTP (POST method)
         restTemplate.exchange(expressApiUrl, HttpMethod.POST, entity, String.class);
     }
 
 
 
 
-    // Optionally, you can add a method to fetch all notifications for a user
+    // getting all the notifications using the user id
     public List<NotificationResponse> getNotificationsForUser(Long userId) {
         List<Notification> notifications = notificationRepository.findByUserId(
                 userId,
@@ -91,14 +91,14 @@ public class NotificationService {
             throw new CustomMessageException("No notifications found for user " + userId);
         }
 
-        // Map the list of notifications to a list of NotificationResponse DTOs
+        // Mapping the list of notifications to a list of NotificationResponse DTOs
         return notifications.stream()
                 .map(NotificationResponse::select)
                 .collect(Collectors.toList());
     }
 
 
-    // Optionally, a method to mark a notification as read
+    // not done
     public void markNotificationAsRead(Long notificationId) {
         Notification notification = notificationRepository.findById(notificationId)
                 .orElseThrow(() -> new RuntimeException("Notification not found"));

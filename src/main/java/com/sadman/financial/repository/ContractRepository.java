@@ -10,13 +10,13 @@ public interface ContractRepository extends JpaRepository<Contract, Long> {
     // Custom method to find contract by loan
     Optional<Contract> findByLoan(Loan loan);
 
-    // Find contract by income ID
+    // Finding contract by income ID
     Optional<Contract> findByIncomeId(Long incomeId);
 
-    // Find contract by expense ID
+    // Finding contract by expense ID
     Optional<Contract> findByExpenseId(Long expenseId);
 
-    // Find contract by loan ID
+    // Finding contract by loan ID
     Optional<Contract> findByLoanId(Long loanId);
 
 

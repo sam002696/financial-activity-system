@@ -6,19 +6,19 @@ import com.sadman.financial.responses.LoanResponse;
 import java.util.Map;
 
 public interface ILoanService {
-    // Log a new loan
+    // Logging a new loan
     LoanResponse logLoan(LoanRequest loanRequest);
 
-    // Get loan by ID
+    // Getting loan by ID
     LoanResponse getLoanById(Long loanId);
 
     Map<String, Object> search(Integer page, Integer size, String sortBy, String search);
 
     LoanResponse updateLoan(Long loanId, LoanRequest loanRequest);
 
-    // Repay loan
+    // Repaying loan
     LoanResponse repayLoan(Long loanId, Double amount);
 
-    // Delete loan
+    // Deleting loan
     void deleteLoan(Long loanId);
 }

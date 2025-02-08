@@ -16,11 +16,11 @@ public class Notification extends BaseEntity {
 
     private String message;
 
-    @Column(name = "is_read")  // Renamed the 'read' column to 'is_read'
+    @Column(name = "is_read")
     private boolean isRead;
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
-    @ToString.Exclude // Prevent infinite recursion
+    @ToString.Exclude
     private User user;
 }

@@ -33,20 +33,20 @@ public class IncomeService implements IIncomeService {
 
     @Override
     public Income logIncome(IncomeRequest incomeRequest) {
-        // Retrieve the user from the SecurityContext (JWT)
+        // Retrieving the user from the SecurityContext (JWT)
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userPrincipal.getId();
 
-        // Retrieve the User entity from the database
+        // Retrieving the User entity from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomMessageException("User not found with id: " + userId));
 
-        // Validate the income amount (should be positive)
+        // Validating the income amount (should be positive)
         if (incomeRequest.getAmount() <= 0) {
             throw new CustomMessageException("Income amount must be greater than zero.");
         }
 
-        // Create the income entity
+        // Creating the income entity
         Income income = new Income();
         income.setAmount(incomeRequest.getAmount());
         income.setSource(incomeRequest.getSource());
@@ -54,20 +54,20 @@ public class IncomeService implements IIncomeService {
         income.setDate(incomeRequest.getDate());
         income.setUser(user);
 
-        // Save the income entity
+        // Saving the income entity
         incomeRepository.save(income);
 
-        // Update the user's balance (add the income amount)
+        // Updating the user's balance (add the income amount)
         user.setBalance(user.getBalance() + incomeRequest.getAmount());
         userRepository.save(user);
 
-        // Create a contract for the income (contract enforcement logic)
+        // Creating a contract for the income (contract enforcement logic)
         contractService.createContractForIncome(income, user);
 
 
         notificationService.sendNotification(userId, "Income", income.getSource() + " - " + income.getAmount());
 
-        // Return the created income
+        // Returning the created income
         return income;
     }
 
@@ -98,50 +98,50 @@ public class IncomeService implements IIncomeService {
 
     @Override
     public IncomeResponse updateIncome(Long incomeId, IncomeRequest incomeRequest) {
-        // Retrieve the existing income by its ID
+        // Retrieving the existing income by its ID
         Income existingIncome = incomeRepository.findById(incomeId)
                 .orElseThrow(() -> new CustomMessageException("Income not found"));
 
-        // Retrieve the user associated with this income
+        // Retrieving the user associated with this income
         User user = existingIncome.getUser();
 
-        // Calculate the difference between the old and new income amount
+        // Calculating the difference between the old and new income amount
         Double amountDifference = incomeRequest.getAmount() - existingIncome.getAmount();
 
-        // Update the fields of the income entity with the new values
+        // Updating the fields of the income entity with the new values
         existingIncome.setAmount(incomeRequest.getAmount());
         existingIncome.setSource(incomeRequest.getSource());
         existingIncome.setCategory(incomeRequest.getCategory());
         existingIncome.setDate(incomeRequest.getDate());
 
-        // Save the updated income back to the database
+        // Saving the updated income back to the database
         incomeRepository.save(existingIncome);
 
-        // Adjust the user's balance based on the amount difference
+        // Adjusting the user's balance based on the amount difference
         user.setBalance(user.getBalance() + amountDifference);
         userRepository.save(user);
 
-        // Return the updated income as a response
+        // Returning the updated income as a response
         return IncomeResponse.select(existingIncome);
     }
 
 
     @Override
     public void deleteIncomeById(Long incomeId) {
-        // Retrieve the existing income by its ID
+        // Retrieving the existing income by its ID
         Income existingIncome = incomeRepository.findById(incomeId)
                 .orElseThrow(() -> new CustomMessageException("Income not found"));
 
-        // Retrieve the user associated with this income
+        // Retrieving the user associated with this income
         User user = existingIncome.getUser();
 
-        // Adjust the user's balance by subtracting the income amount (since we are deleting it)
+        // Adjusting the user's balance by subtracting the income amount (since we are deleting it)
         user.setBalance(user.getBalance() - existingIncome.getAmount());
 
-        // Save the updated user balance
+        // Saving the updated user balance
         userRepository.save(user);
 
-        // Delete the income record from the database
+        // Deleting the income record from the database
         incomeRepository.delete(existingIncome);
     }
 

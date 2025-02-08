@@ -33,41 +33,41 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public ExpenseResponse logExpense(ExpenseRequest expenseRequest) {
-        // Retrieve the user from the SecurityContext (JWT)
+        // Retrieving the user from the SecurityContext (JWT)
         UserPrincipal userPrincipal = (UserPrincipal) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         Long userId = userPrincipal.getId();
 
-        // Retrieve the User entity from the database
+        // Retrieving the User entity from the database
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomMessageException("User not found with id: " + userId));
 
-        // Validate that the expense amount is greater than zero
+        // Validating that the expense amount is greater than zero
         if (expenseRequest.getAmount() <= 0) {
             throw new CustomMessageException("Expense amount must be greater than zero.");
         }
 
-        // Validate that the user has enough balance to log the expense
+        // Validating that the user has enough balance to log the expense
         if (user.getBalance() < expenseRequest.getAmount()) {
             throw new CustomMessageException("Insufficient balance to log the expense.");
         }
 
-        // Create the expense
+        // Creating the expense
         Expense expense = new Expense();
         expense.setAmount(expenseRequest.getAmount());
         expense.setCategory(expenseRequest.getCategory());
         expense.setDate(expenseRequest.getDate());
         expense.setUser(user);
 
-        // Save the expense
+        // Saving the expense
         expenseRepository.save(expense);
 
-        // Update the user's balance by deducting the expense amount
+        // Updating the user's balance by deducting the expense amount
         user.setBalance(user.getBalance() - expenseRequest.getAmount());
 
-        // Save the updated user balance
+        // Saving the updated user balance
         userRepository.save(user);
 
-        // Create a contract for the expense
+        // Creating a contract for the expense
         contractService.createContractForExpense(expense, user);
 
         notificationService.sendNotification(userId, "Expense",
@@ -101,30 +101,30 @@ public class ExpenseService implements IExpenseService {
 
     @Override
     public ExpenseResponse updateExpense(Long expenseId, ExpenseRequest expenseRequest) {
-        // Retrieve the existing expense
+        // Retrieving the existing expense
         Expense existingExpense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new CustomMessageException("Expense not found"));
 
-        // Retrieve the user associated with the expense
+        // Retrieving the user associated with the expense
         User user = existingExpense.getUser();
 
-        // Validate that the expense amount is greater than zero
+        // Validating that the expense amount is greater than zero
         if (expenseRequest.getAmount() <= 0) {
             throw new CustomMessageException("Expense amount must be greater than zero.");
         }
 
-        // Calculate the difference between the old and new expense amounts
+        // Calculating the difference between the old and new expense amounts
         Double amountDifference = expenseRequest.getAmount() - existingExpense.getAmount();
 
-        // Update the expense details
+        // Updating the expense details
         existingExpense.setAmount(expenseRequest.getAmount());
         existingExpense.setCategory(expenseRequest.getCategory());
         existingExpense.setDate(expenseRequest.getDate());
 
-        // Save the updated expense
+        // Saving the updated expense
         expenseRepository.save(existingExpense);
 
-        // Update the user's balance
+        // Updating the user's balance
         if (amountDifference < 0) {
             // If the expense has been reduced, we increase the balance
             user.setBalance(user.getBalance() + Math.abs(amountDifference));
@@ -133,22 +133,22 @@ public class ExpenseService implements IExpenseService {
             user.setBalance(user.getBalance() - amountDifference);
         }
 
-        // Save the updated user balance
+        // Saving the updated user balance
         userRepository.save(user);
 
-        // Return the updated expense
+        // Returning the updated expense
         return ExpenseResponse.select(existingExpense);
     }
 
 
     @Override
     public void deleteExpenseById(Long expenseId) {
-        // Retrieve the existing expense by its ID
+        // Retrieving the existing expense by its ID
         Expense expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new CustomMessageException("Expense not found"));
-        
 
-        // Delete the expense record
+
+        // Deleting the expense record
         expenseRepository.delete(expense);
 
     }

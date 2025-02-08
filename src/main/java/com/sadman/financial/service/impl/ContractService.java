@@ -20,13 +20,13 @@ public class ContractService implements IContractService {
     public void createContractForIncome(Income income, User user) {
         // Create the contract for the income
         Contract contract = new Contract();
-        contract.setContractType(ContractType.INCOME); // Type of contract: INCOME
-        contract.setStatus(ContractStatus.ACTIVE);     // Initially set to ACTIVE
+        contract.setContractType(ContractType.INCOME);
+        contract.setStatus(ContractStatus.ACTIVE);
         contract.setTerms("Income source: " + income.getSource());
-        contract.setStartDate(LocalDate.now());       // Set start date to current date
-        contract.setIncome(income);                    // Associate income with the contract
-        contract.setUser(user);                        // Associate the user with the contract
-        contractRepository.save(contract);             // Save the contract to the repository
+        contract.setStartDate(LocalDate.now());
+        contract.setIncome(income);
+        contract.setUser(user);
+        contractRepository.save(contract);
     }
 
 
@@ -40,11 +40,11 @@ public class ContractService implements IContractService {
         contract.setStatus(ContractStatus.ACTIVE);
         contract.setTerms("Expense logged");
         contract.setStartDate(LocalDate.now());
-        contractRepository.save(contract);             // Save the contract to the repository
+        contractRepository.save(contract);             // Saving the contract to the repository
     }
 
 
-    // Create a contract for the loan
+    // Creating a contract for the loan
     @Override
     public Contract createContractForLoan(Loan loan, User user) {
         Contract contract = new Contract();
@@ -56,28 +56,28 @@ public class ContractService implements IContractService {
         contract.setStartDate(LocalDate.now());
         contract.setDueDate(loan.getDueDate());
 
-        // Save the contract
+        // Saving the contract
         contractRepository.save(contract);
         return contract;
     }
 
-    // Update the loan repayment status
+    // Updating the loan repayment status
     @Override
     public void updateLoanRepaymentStatus(Loan loan) {
         Contract contract = contractRepository.findByLoan(loan)
                 .orElseThrow(() -> new CustomMessageException("Contract not found for loan"));
 
         if (loan.getRemainingAmount() <= 0) {
-            contract.setStatus(ContractStatus.PAID);  // Mark as PAID
+            contract.setStatus(ContractStatus.PAID);
         } else if (contract.getDueDate().isBefore(LocalDate.now())) {
-            contract.setStatus(ContractStatus.OVERDUE);  // Mark as OVERDUE if due date has passed
+            contract.setStatus(ContractStatus.OVERDUE);
         }
 
         contractRepository.save(contract);
     }
 
 
-    // Fetch contract for Income
+    // Fetching contract for Income
     @Override
     public Contract getContractForIncome(Long incomeId) {
 
@@ -86,7 +86,7 @@ public class ContractService implements IContractService {
         return existingContract;
     }
 
-    // Fetch contract for Expense
+    // Fetching contract for Expense
     @Override
     public Contract getContractForExpense(Long expenseId) {
 
@@ -97,7 +97,7 @@ public class ContractService implements IContractService {
 
     }
 
-    // Fetch contract for Loan
+    // Fetching contract for Loan
     @Override
     public Contract getContractForLoan(Long loanId) {
 
