@@ -81,7 +81,7 @@ public class ContractService implements IContractService {
     @Override
     public Contract getContractForIncome(Long incomeId) {
 
-        Contract existingContract = contractRepository.findById(incomeId)
+        Contract existingContract = contractRepository.findByIncomeId(incomeId)
                 .orElseThrow(() -> new CustomMessageException("income not found in the contract"));
         return existingContract;
     }
@@ -90,7 +90,7 @@ public class ContractService implements IContractService {
     @Override
     public Contract getContractForExpense(Long expenseId) {
 
-        Contract existingContract = contractRepository.findById(expenseId)
+        Contract existingContract = contractRepository.findByExpenseId(expenseId)
                 .orElseThrow(() -> new CustomMessageException("expense not found in the contract"));
         return existingContract;
 
@@ -101,7 +101,7 @@ public class ContractService implements IContractService {
     @Override
     public Contract getContractForLoan(Long loanId) {
 
-        Contract existingContract = contractRepository.findById(loanId)
+        Contract existingContract = contractRepository.findByLoanId(loanId)
                 .orElseThrow(() -> new CustomMessageException("loan not found in the contract"));
         return existingContract;
     }

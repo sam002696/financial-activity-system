@@ -24,9 +24,9 @@ public interface LoanRepository extends JpaRepository<Loan, Long> {
 
 
     @Query("SELECT SUM(l.amount) FROM Loan l WHERE l.user.id = :userId")
-    double findTotalLoanByUser(Long userId);
+    Double findTotalLoanByUser(Long userId);
 
     @Query("SELECT SUM(l.remainingAmount) FROM Loan l WHERE l.user.id = :userId")
-    double findRemainingLoanByUser(Long userId);
+    Double findRemainingLoanByUser(Long userId);
 
 }

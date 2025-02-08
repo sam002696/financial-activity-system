@@ -146,15 +146,7 @@ public class ExpenseService implements IExpenseService {
         // Retrieve the existing expense by its ID
         Expense expense = expenseRepository.findById(expenseId)
                 .orElseThrow(() -> new CustomMessageException("Expense not found"));
-
-        // Retrieve the user associated with the expense
-        User user = expense.getUser();
-
-        // Adjust the user's balance
-        user.setBalance(user.getBalance() - expense.getAmount());
-
-        // Save the updated balance
-        userRepository.save(user);
+        
 
         // Delete the expense record
         expenseRepository.delete(expense);

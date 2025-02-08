@@ -104,6 +104,7 @@ public class LoanService implements ILoanService {
 
         // Update the expense details
         existingLoan.setAmount(loanRequest.getAmount());
+        existingLoan.setRemainingAmount(loanRequest.getAmount());
         existingLoan.setDueDate(loanRequest.getDueDate());
 
         // Save the updated expense

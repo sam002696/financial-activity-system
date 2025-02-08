@@ -37,10 +37,16 @@ public class DashboardService {
                 .orElseThrow(() -> new CustomMessageException("User not found with id: " + userId));
 
         // Fetching totals for each financial activity
-        double totalIncome = incomeRepository.findTotalIncomeByUser(user.getId());
-        double totalExpense = expenseRepository.findTotalExpenseByUser(user.getId());
-        double totalLoan = loanRepository.findTotalLoanByUser(user.getId());
-        double remainingLoan = loanRepository.findRemainingLoanByUser(user.getId());
+        Double totalIncome = incomeRepository.findTotalIncomeByUser(user.getId());
+        Double totalExpense = expenseRepository.findTotalExpenseByUser(user.getId());
+        Double totalLoan = loanRepository.findTotalLoanByUser(user.getId());
+        Double remainingLoan = loanRepository.findRemainingLoanByUser(user.getId());
+
+        // Handling null values, defaulting to 0.0 if the values are null
+        totalIncome = (totalIncome != null) ? totalIncome : 0.0;
+        totalExpense = (totalExpense != null) ? totalExpense : 0.0;
+        totalLoan = (totalLoan != null) ? totalLoan : 0.0;
+        remainingLoan = (remainingLoan != null) ? remainingLoan : 0.0;
 
         // User balance
         double balance = user.getBalance();
